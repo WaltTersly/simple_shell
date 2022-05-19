@@ -32,16 +32,11 @@ $ cat test_ls_2
 $
 $ cat test_ls_2 | ./hsh
 hsh main.c shell.c test_ls_2
-hsh main.c shell.c test_ls_2
+hsh main.c shell.c test_ls_2i
 $
 ```
 ---
 
-## Example
-
-![example](https://media.giphy.com/media/cC9jj6fr8m5SZ56Z2l/giphy.gif)
-
----
 
 ## Files
 
