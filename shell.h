@@ -1,46 +1,39 @@
-#ifndef SHELL
-#define SHELL
+#ifndef _SHELL_H
+#define _SHELL_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
 #include <string.h>
-#include <dirent.h>
-#include <stddef.h>
-#include <errno.h>
+#include <stdio.h>
+#include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#define TOKENS_BUFFER_SIZE 64
-#define LINE_SIZE 1024
-#define TOKEN_DELIMITERS " \t\r\n\a"
+#include <sys/stat.h>
+#include <stdlib.h>
+#include <stddef.h>
+#include <errno.h>
+
 extern char **environ;
-/**
- *  * struct builtins - Has builtins and associated funcs
- *   * @arg: Builtins name
- *    * @builtin: Mathcing builtin func
- *     */
-typedef struct builtins
-{
-	char *arg;
-	void (*builtin)(char **args, char *line, char **env);
-} builtins_t;
-void shell(int ac, char **av, char **env);
+
+#define TOK_DELIM " \n\a\t"
+
+void _loop(char **env);
+int _getchar(void);
+char *get_line(void);
+char *str_concate(char *s1, char *s2);
+char *get_PATH_token(char *command);
 char *_getline(void);
-char **split_line(char *line);
-int execute_prog(char **args, char *line, char **env, int flow);
-int check_for_builtins(char **args, char *line, char **env);
-int launch_prog(char **args);
-void exit_shell(char **args, char *line, char **env);
-void env_shell(char **args, char *line, char **env);
-int _strcmp(char *s1, char *s2);
-char *find_path(char *args, char *tmp, char *er);
-char *search_cwd(char *filename, char *er);
-int bridge(char *check, char **args);
 void prompt(void);
-int builtins_checker(char **args);
-char *save_path(char *tmp, char *path);
-char *read_dir(char *er, struct dirent *s, char *fi, int l, char *p, char *t);
-char *_getenv(char *env);
-char *_strstr(char *haystack, char *needle);
+char **split_line(char *line);
+int _strcmp(char *s1, char *s2);
 int _strlen(char *s);
+char *_strdup(char *str);
+int myexit(char **input);
+void env(char **env);
+int print_env(char **input);
+int built_in_check(char *s, char **input);
+int execute(char *combine, char **input);
+char *path_concate(char *directory, char *argument);
+char *get_env(char **env);
+char **dir_only(char **env);
+char *check_path(char **directory, char *input);
+
 #endif
