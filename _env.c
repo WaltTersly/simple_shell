@@ -1,16 +1,24 @@
-#include "shell.h"
-/**
- *  *env - Prints env variable
- *   *@env: enviroment variable
- *    *Description: function to print out enviroment variable
- *     */
-void env(char **env)
-{
-	int word;
+#include "builtins.h"
 
-	for (word = 0; env[word] != NULL; word++)
+/**
+  * __env - displays environment
+  * @info: arguments passed
+  * Return: int
+  */
+int __env(info_t *info)
+{
+	env_t *var;
+
+	info->status = EXIT_SUCCESS;
+
+	for (var = info->env; var; var = var->next)
 	{
-		write(1, env[word], _strlen(env[word]));
-		write(1, "\n", 1);
+		if (var->key)
+			write(STDOUT_FILENO, var->key, _strlen(var->key));
+		write(STDOUT_FILENO, "=", 1);
+		if (var->val)
+			write(STDOUT_FILENO, var->val, _strlen(var->val));
+		write(STDOUT_FILENO, "\n", 1);
 	}
+	return (info->status);
 }
